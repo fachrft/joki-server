@@ -1,0 +1,43 @@
+GET http://localhost:5000/PPT
+
+###
+POST http://localhost:5000/PPT
+Content-Type: application/json
+
+{
+    "nomor_hp": "085697660137",
+    "pelajaran_ppt": "matematika",
+    "materi_ppt": "diagram",
+    "harga": 12000
+}
+
+###
+//delete
+DELETE http://localhost:5000/PPT/f6eb8935-0228-4077-aa5a-f0b0143c7a1f
+
+###
+GET http://localhost:5000/website
+
+###
+POST http://localhost:5000/website
+Content-Type: application/json
+
+{
+    "nomor_hp": "085697660137",
+    "jenis_web": "portofolio",
+    "harga": 12000
+}
+
+
+### 
+GET http://localhost:5000/Design
+
+###
+POST http://localhost:5000/Design
+Content-Type: application/json
+
+{
+    "nomor_hp": "085697660137",
+    "jenis_design": "portofolio",
+    "harga": 12000
+}
