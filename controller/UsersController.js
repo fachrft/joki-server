@@ -13,7 +13,7 @@ export const getUsers = async (req, res) => {
 }
 export const getUsersById = async (req, res) => {
     const response = await Users.findOne({
-        attributes: ['uuid', 'name', 'email', 'role'],
+        attributes: ['uuid', 'name', 'email', 'role', 'password'],
         where: {
             uuid : req.params.id
         }
@@ -26,7 +26,8 @@ export const getUsersById = async (req, res) => {
     }
 }
 export const createUsers = async (req, res) => {
-    const { name, email, password, confirmPassword, role } = req.body;
+    const { name, email, password, confirmPassword, } = req.body;
+    const role = req.body.role || 'user'
     if(password !== confirmPassword) return res.status(400).json({msg : 'Invalid password'})
     const salt = await bcrypt.genSalt()
     const hashPassword = await bcrypt.hash(password, salt)
@@ -50,20 +51,13 @@ export const updateUsers = async (req, res) => {
         }
     })
     if(!user) return res.status(404).json({msg: 'User not found'})
-    const { name, email, password, confirmPassword, role } = req.body;
-    let hashPassword
-    if(password === '' || password === null) {
-        hashPassword = user.password
-    } else {
-        const salt = await bcrypt.genSalt()
-        hashPassword = await bcrypt.hash(password, salt) 
-    }
-    if(password !== confirmPassword) return res.status(400).json({msg : 'Invalid password'})
+    const { name, email,} = req.body;
+    const role = req.body.role || 'user'
+    let hashPassword;
     try {
         await Users.update({
             name: name,
             email: email,
-            password: hashPassword,
             role: role
         }, {
             where: {
